@@ -23,6 +23,9 @@
 // Define frequency
 #define RF95_FREQ 915.0
 
+//serial write stuff
+int serialData = 0;
+
 // Singleton instance of the radio driver
 RH_RF95 rf95(RFM95_CS, RFM95_INT);
 
@@ -68,6 +71,13 @@ void setup() {
 }
 
 void loop() {
+  //serial loop
+  if (Serial.available() > 0)
+  {
+    serialData = Serial.read();
+    Serial.println(serialData);
+  }  
+  
   // Tests whether or not a new message is available
   if (rf95.available()) {
     char buf[RH_RF95_MAX_MESSAGE_LEN];
